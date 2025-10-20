@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compliments 💖</title>
+  <script>
+    // Update title with decoded name
+    document.addEventListener('DOMContentLoaded', () => {
+      const decodedName = localStorage.getItem('decodedName');
+      if (!decodedName) {
+        window.location.href = 'secretcode.html';
+      } else {
+        document.title = "Compliments for " + decodedName + " 💖";
+      }
+    });
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+    
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    .nav-home {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      padding: 10px 18px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      text-decoration: none;
+      border-radius: 22px;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <a href="index.html" class="nav-home">← Back to Home</a>
+
+  <script>
+    var c = document.getElementById('c'),
+        w = c.width = window.innerWidth, 
+        h = c.height = window.innerHeight, 
+        ctx = c.getContext('2d'), 
+        
+        opts = { 
+          phrases: [],
+          
+          // Initialize phrases with decoded name
+          initPhrases: function() {
+            const decodedName = localStorage.getItem('decodedName') || '';
+           this.phrases = [
+  decodedName + ", you're\nmy favorite reason to smile",
+  "The stars look jealous,\n" + decodedName + ", you outshine them",
+  "Every moment with you\nfeels like a dream come true",
+  decodedName + ", you make\nhearts flutter effortlessly",
+  "You're the cozy feeling\non a cold morning",
+  decodedName + ", you're\nmade of light and laughter",
+  "You’re proof that\nmagic is real",
+  decodedName + ", you’re\nas rare as a sunrise that lasts",
+  "You have a glow\nthat words can’t capture",
+  decodedName + ", you’re\na soft breeze and a warm hug",
+  "If smiles were stars,\nyours would light the sky",
+  decodedName + ", you’re\nmy favorite thought today",
+  "Every heartbeat\nspells your name, " + decodedName,
+  decodedName + ", you make\nlife taste sweeter",
+  "You shine like\nhope in the dark",
+  decodedName + ", you’re\nwhat peace feels like",
+  "You're the poem\nI didn’t know I was writing",
+  decodedName + ", you make\nordinary feel magical",
+  "The world slows down\nwhen you smile, " + decodedName,
+  decodedName + ", you’re\nsimply unforgettable",
+  "You turn grey days\ninto golden ones",
+  decodedName + ", your presence\nfeels like home",
+  "Every word you say\nfeels like a song lyric",
+  decodedName + ", you’re\nmy favorite notification",
+  "You make kindness\nlook like an art form",
+  decodedName + ", you’ve got\nthat soul-deep beauty",
+  "Even the moon\nwatches you in awe",
+  decodedName + ", you’re\nbetter than good dreams",
+  "You’re the calm\nin every storm",
+  decodedName + ", you make\nlove sound easy",
+  "You’re everything\nsoft and shining, " + decodedName
+];
+
+          },
+          
+          // Initialize phrases when created
+          init: function() {
+            this.initPhrases();
+          }, 
+          balloons: 10, 
+          baseVelY: -1, 
+          addedVelY: -1, 
+          baseVelX: -.25, 
+          addedVelX: .5, 
+          baseSize: 20, 
+          addedSize: 10, 
+          baseSizeAdder: 2, 
+          addedSizeAdder: 2, 
+          baseIncrementer: .01, 
+          addedIncrementer: .03, 
+          baseHue: -10, 
+          addedHue: 30, 
+          font: '15px Verdana' 
+        }, 
+        
+        cycle = 0, 
+        balloons = []; 
+
+    ctx.font = opts.font; 
+
+    // Initialize opts
+    opts.init();
+    
+    function Balloon(){ 
+      this.reset(); 
+    } 
+    Balloon.prototype.reset = function(){ 
+      
+      this.size = opts.baseSize + opts.addedSize * Math.random(); 
+      this.sizeAdder = opts.baseSizeAdder + opts.addedSizeAdder * Math.random(); 
+      this.incrementer = opts.baseIncrementer + opts.addedIncrementer * Math.random(); 
+      
+      this.tick = 0; 
+      
+      this.x = Math.random() * w; 
+      this.y = h + this.size; 
+      
+      this.vx = opts.baseVelX + opts.addedVelX * Math.random(); 
+      this.vy = opts.baseVelY + opts.addedVelY * Math.random(); 
+      
+      this.color = 'hsla(hue,70%,60%,.8)'.replace('hue', opts.baseHue + opts.addedHue * Math.random()); 
+      this.phrase = opts.phrases[++cycle % opts.phrases.length].split('\n'); 
+      this.lengths = []; 
+      
+      for(var i = 0; i < this.phrase.length; ++i) 
+        this.lengths.push(-ctx.measureText(this.phrase[i]).width / 2); 
+    } 
+    Balloon.prototype.step = function(){ 
+      
+      this.tick += this.incrementer; 
+      this.x += this.vx; 
+      this.y += this.vy; 
+      
+      var size = this.size + this.sizeAdder * Math.sin(this.tick); 
+      
+      ctx.lineWidth = size / 40; 
+      ctx.strokeStyle = '#eee'; 
+      ctx.beginPath(); 
+      ctx.moveTo(this.x, this.y - 2); 
+      ctx.lineTo(this.x, this.y + size); 
+      ctx.stroke(); 
+      ctx.fillStyle = this.color; 
+      
+      ctx.translate(this.x, this.y); 
+      ctx.rotate(Math.PI / 4); 
+      ctx.beginPath(); 
+      ctx.moveTo(0, 0); 
+      ctx.arc(-size / 2, -size / 2 + size / 4, size / 4, Math.PI / 2, Math.PI * 3 / 2); 
+      ctx.arc(-size / 2 + size / 4, -size / 2, size / 4, Math.PI, Math.PI * 2); 
+      ctx.lineTo(0, 0); 
+      ctx.fill(); 
+      ctx.rotate(-Math.PI / 4); 
+      ctx.translate(-this.x, -this.y); 
+      
+      ctx.translate(this.x, this.y + size + 15); 
+      ctx.scale(size / this.size, size / this.size); 
+      ctx.fillStyle = '#eee'; 
+      for(var i = 0; i < this.phrase.length; ++i) 
+        ctx.fillText(this.phrase[i], this.lengths[i], i * 15); 
+      ctx.scale(this.size / size, this.size / size); 
+      ctx.translate(-this.x, -(this.y + size + 15)); 
+      
+      if(this.y < -size * 3) 
+        this.reset(); 
+    } 
+
+    // Create initial balloons
+    function createInitialBalloons() {
+      // Create balloons at different positions on the screen
+      for (let i = 0; i < opts.balloons; i++) {
+        const balloon = new Balloon();
+        // Override default position to place balloons across the screen
+        balloon.x = Math.random() * w;
+        balloon.y = Math.random() * h * 0.8 + h * 0.2; // Position in the visible area
+        balloons.push(balloon);
+      }
+    }
+    
+    // Create initial balloons on page load
+    createInitialBalloons();
+    
+    function anim(){ 
+      
+      window.requestAnimationFrame(anim); 
+      
+      ctx.fillStyle = 'rgba(20,20,30,0.6)'; 
+      ctx.fillRect(0, 0, w, h); 
+      
+      if(balloons.length < opts.balloons && Math.random() < .01) 
+        balloons.push(new Balloon); 
+      
+      for(var i = 0; i < balloons.length; ++i) 
+        balloons[i].step(); 
+    } 
+    anim();
+    
+    window.addEventListener('resize', function() {
+      w = c.width = window.innerWidth;
+      h = c.height = window.innerHeight;
+      ctx.font = opts.font;
+    });
+  </script>
+</body>
+</html>

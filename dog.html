@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Your Favorite Animal!</title>
+     <script>
+         // Check if user has decoded name, if not redirect to secretcode.html
+         window.addEventListener('DOMContentLoaded', () => {
+             const decodedName = localStorage.getItem('decodedName');
+             if (!decodedName) {
+                 window.location.href = 'secretcode.html';
+             } else {
+                 document.title = `Meet Your Favorite Animal, ${decodedName}!`;
+             }
+         });
+     </script>
+    <style>
+        :root { 
+            --dog-color: white; 
+            --dog-accent-color: #333642; 
+            --background-color: #25A9FC; 
+            --slide-color: #FEDF01; 
+            --ladder-color: #0185B5; 
+            --heart-color: #E81C23; 
+            --canvas-size: min(92vw, 600px);
+        }
+
+        body { 
+            background: var(--background-color);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: #FEDF01;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .message {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .message p {
+            color: #333;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        /* Cheesy list styling */
+        .message .cheesy-list { 
+            margin: 12px 0 0 0; 
+            padding: 0; 
+            list-style: none; 
+        }
+        .message .cheesy-list li { 
+            margin: 8px 0; 
+            color: #555; 
+            font-size: 1.05rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            animation: floatIn 0.6s ease both; 
+        }
+        .message .cheesy-list li::before { 
+            content: '🐾'; 
+            font-size: 1.1rem; 
+        }
+
+        @keyframes floatIn { 
+            from { opacity: 0; transform: translateY(8px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Navigation back to home */
+        .nav-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .nav-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .box-canvas{ 
+            position: relative; 
+            margin: auto; 
+            display: block; 
+            margin-top: 8%; 
+            margin-bottom: 8%; 
+            width: var(--canvas-size); 
+            height: var(--canvas-size); 
+        } 
+
+        /* Dog animation styles */
+        .dog { 
+            position: absolute; 
+            right: calc(var(--canvas-size) * 0.2833); 
+            top: calc(var(--canvas-size) * 0.1167); 
+            width: calc(var(--canvas-size) * 0.0967); 
+            height: calc(var(--canvas-size) * 0.1250); 
+            animation: dogSlide 2s infinite ease-in-out; 
+            will-change: transform; 
+        } 
+
+        @keyframes dogSlide { 
+            10% { 
+                transform: translateX(calc(-1 * var(--canvas-size) * 0.0417)); 
+            } 
+            
+            70% { 
+                transform: rotate(-20deg) translate(calc(-1 * var(--canvas-size) * 0.3083), calc(var(--canvas-size) * 0.0833)); 
+            } 
+            
+            90% { 
+                transform: translate(calc(-1 * var(--canvas-size) * 0.3417), calc(var(--canvas-size) * 0.2083)); 
+            } 
+            
+            100% { 
+                transform: translate(calc(-1 * var(--canvas-size) * 0.3417), calc(var(--canvas-size) * 0.2083)); 
+            } 
+        } 
+
+        .heart { 
+            opacity: 0; 
+            position: absolute; 
+            background: var(--heart-color); 
+            width: 25.86%; 
+            height: 20%; 
+            border-radius: 50%; 
+            top: -66.67%; 
+            left: 60%; 
+            transform: translateX(-60%); 
+            animation: heartAppear 2s infinite ease-in-out; 
+        } 
+
+        .heart::before { 
+            content: ''; 
+            position: absolute; 
+            left: 17.24%; 
+            background: var(--heart-color); 
+            width: 25.86%; 
+            height: 20%; 
+            border-radius: 50%; 
+        } 
+
+        .heart::after { 
+            content: ''; 
+            position: absolute; 
+            top: 13.33%; 
+            left: 0; 
+            background: var(--heart-color); 
+            width: 43.1%; 
+            height: 13.33%; 
+            clip-path: polygon(50% 100%, 0 0, 100% 0); 
+        } 
+
+        @keyframes heartAppear { 
+            0% { opacity: 0; } 
+            50% { opacity: 0; } 
+            70% { opacity: 1; } 
+            90% { opacity: 1; } 
+            100% { opacity: 0; } 
+        } 
+
+        .body { 
+            position: absolute; 
+            left: 22.4%; 
+            width: 75.86%; 
+            height: 100%; 
+            border-radius: 25% 10% 20% 20%; 
+            background: var(--dog-color); 
+        } 
+
+        .body::before{ 
+            content: ''; 
+            position: absolute; 
+            top: 6.67%; 
+            left: -5.17%; 
+            background: var(--dog-color); 
+            border-radius: 20%; 
+            width: 34.48%; 
+            height: 40%; 
+            transform: rotate(45deg); 
+        } 
+
+        .body::after { 
+            content: ''; 
+            position: absolute; 
+            background: var(--dog-color); 
+            width: 43.1%; 
+            height: 20%; 
+            top: 26.67%; 
+            left: -20.69%; 
+            border-radius: 20% 20% 50% 20%; 
+            border-bottom: 2px solid var(--dog-accent-color); 
+            animation: dogSmile 2s infinite ease-in-out; 
+        } 
+
+        @keyframes dogSmile { 
+            0% { 
+                border-radius: 20% 20% 20% 20%; 
+                border-bottom: none; 
+            } 
+            
+            70% { 
+                border-radius: 20% 20% 50% 20%; 
+                border-bottom: 2px solid var(--dog-accent-color); 
+            } 
+        } 
+
+        .nose { 
+            position: absolute; 
+            background-color: var(--dog-accent-color); 
+            width: 13.79%; 
+            height: 6.67%; 
+            border-radius: 30%; 
+            top: 26.67%; 
+        } 
+
+        .ear { 
+            position: absolute; 
+            left: 60.34%; 
+            width: 34.48%; 
+            height: 40%; 
+            background: var(--dog-accent-color); 
+            border-radius: 0 0 30% 30%; 
+        } 
+
+        .eye { 
+            position: absolute; 
+            left: 37.93%; 
+            top: 13.33%; 
+            background: var(--dog-accent-color); 
+            width: 8.62%; 
+            height: 6.67%; 
+            border-radius: 50%; 
+        } 
+
+        .tail { 
+            position: absolute; 
+            bottom: 0; 
+            right: -13.79%; 
+            width: 17.24%; 
+            height: 73.33%; 
+            background: var(--dog-color); 
+            transform: rotate(25deg); 
+        } 
+
+        .tail::before { 
+            content: ''; 
+            position: absolute; 
+            top: -20%; 
+            width: 25.86%; 
+            height: 33.33%; 
+            background: var(--dog-color); 
+            clip-path: polygon(12% 0, 0% 100%, 100% 100%); 
+        } 
+
+        .tail::after { 
+            content: ''; 
+            position: absolute; 
+            top: 6.67%; 
+            left: 8.62%; 
+            width: 20.69%; 
+            height: 33.33%; 
+            background: var(--dog-color); 
+            clip-path: polygon(12% 0, 0% 100%, 100% 100%); 
+        } 
+
+        .slide { 
+            position: absolute; 
+            width: calc(var(--canvas-size) * 0.45); 
+            height: calc(var(--canvas-size) * 0.3333); 
+            left: 50%; 
+            transform: translateX(-50%); 
+            top: calc(var(--canvas-size) * 0.1667); 
+        } 
+
+        .slide-main { 
+            position: absolute; 
+            bottom: 32%; 
+            left: 19.6%; 
+            width: 74.07%; 
+            height: 25%; 
+            background: var(--slide-color); 
+            transform: rotate(-45deg); 
+        } 
+
+        .slide-end { 
+            position: absolute; 
+            height: 25%; 
+            width: 37.04%; 
+            background: var(--slide-color); 
+            bottom: 0; 
+            border-radius: 50% 0 0 0; 
+        } 
+
+        .slide-start { 
+            position: absolute; 
+            height: 25%; 
+            top: 11.5%; 
+            width: 23.33%; 
+            background: var(--slide-color); 
+            right: 0px; 
+        } 
+
+        .slide-start::after { 
+            content: ''; 
+            position: absolute; 
+            height: 88.5%; 
+            width: 3.7%; 
+            background: var(--ladder-color); 
+            right: 0; 
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 420px) {
+            .box-canvas {
+                /* container now scales via --canvas-size */
+                margin-top: 12%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .message {
+                margin: 10px;
+                padding: 15px;
+            }
+            
+            .message p {
+                font-size: 1rem;
+            }
+            .message .cheesy-list li { font-size: 0.98rem; }
+            .nav-home { padding: 8px 14px; font-size: 0.9rem; }
+        }
+
+        @media (max-width: 360px) {
+            .box-canvas { margin-top: 16%; }
+            h1 { font-size: 1.6rem; }
+            .tagline { font-size: 0.95rem; }
+            .message { margin: 10px 8px; padding: 12px; }
+            .message p { font-size: 0.95rem; }
+            .message .cheesy-list li { font-size: 0.94rem; }
+            .nav-home { padding: 7px 12px; font-size: 0.85rem; }
+        }
+
+        @media (max-width: 320px) {
+            .box-canvas { margin-top: 18%; }
+            h1 { font-size: 1.45rem; }
+            .tagline { font-size: 0.9rem; }
+            .message { margin: 8px 6px; padding: 10px; }
+            .message p { font-size: 0.9rem; }
+            .message .cheesy-list li { font-size: 0.9rem; }
+            .nav-home { top: 12px; left: 12px; padding: 6px 10px; font-size: 0.82rem; }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="nav-home">← Back to Home</a>
+    
+    <header>
+        <h1 id="dogTitle">Meet Your Happy Pup!</h1>
+        <p class="tagline" id="dogTagline">Be happy and chill like them always 💛</p>
+        <script>
+            // Update content with decoded name
+            document.addEventListener('DOMContentLoaded', () => {
+                const decodedName = localStorage.getItem('decodedName');
+                if (decodedName) {
+                    document.getElementById('dogTitle').textContent = "Meet Your Happy Pup, " + decodedName + "!";
+                    document.getElementById('dogTagline').textContent = decodedName + ", be happy and chill like them always 💛";
+                }
+            });
+        </script>
+    </header>
+    <div class="box-canvas"> 
+        <div class="dog"> 
+            <div class="heart"></div> 
+            <div class="body"></div> 
+            <div class="nose"></div> 
+            <div class="ear"></div> 
+            <div class="eye"></div> 
+            <div class="tail"></div> 
+        </div> 
+        <div class="slide"> 
+            <div class="slide-end"></div> 
+            <div class="slide-main"></div> 
+            <div class="slide-start"></div>
+        </div> 
+    </div> 
+    <div class="message">
+        <p id="message1">Just like this adorable pup sliding into joy, let's embrace every moment with a wagging tail and a happy heart! 🐕</p>
+        <p id="message2">Keep your spirit as bright as a puppy's smile — let happiness slide into your life naturally! 💖</p>
+        
+        <ul class="cheesy-list" id="cheesyList">
+            <li>You're pawsitively adorable — chew away the blues!</li>
+            <li>Fetch smiles. Drop worries. Roll in joy.</li>
+            <li>No bones about it: you deserve good days.</li>
+            <li>Tail‑wag powered positivity — be happy and chill like them always.</li>
+            <li>Good vibes on a leash; let's take them for a walk.</li>
+        </ul>
+        
+        <script>
+            // Update messages with decoded name
+            document.addEventListener('DOMContentLoaded', () => {
+                const decodedName = localStorage.getItem('decodedName');
+                if (decodedName) {
+                    document.getElementById('message1').textContent = decodedName + ", just like this adorable pup sliding into joy, let's embrace every moment with a wagging tail and a happy heart! 🐕";
+                    document.getElementById('message2').textContent = "Keep your spirit as bright as a puppy's smile, " + decodedName + " — let happiness slide into your life naturally! 💖";
+                    
+                    // Update list items
+                    const listItems = document.getElementById('cheesyList').getElementsByTagName('li');
+                    listItems[0].textContent = decodedName + ", you're pawsitively adorable — chew away the blues!";
+                    listItems[1].textContent = "Fetch smiles, " + decodedName + ". Drop worries. Roll in joy.";
+                    listItems[2].textContent = "No bones about it, " + decodedName + ": you deserve good days.";
+                    listItems[4].textContent = "Good vibes on a leash, " + decodedName + "; let's take them for a walk.";
+                }
+            });
+        </script>
+    </div>
+
+
+</body>
+</html>

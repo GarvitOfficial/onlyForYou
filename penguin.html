@@ -1,0 +1,353 @@
+<!DOCTYPE html> 
+<html> 
+  <head> 
++    <meta charset="UTF-8" />
++    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title> 
+       Penguin  © 
+     </title> 
+   </head> 
+   <body> 
+    <header> 
+     <h1>Meet  the Penguin</h1>
+     <p class="tagline">The sweetest soul you'll ever meet — ready to waddle straight into your heart 💕</p> 
+   	</header> 
+   	<main> 
+   		<section> 
+   			<h2>This little charmer steals hearts, not just fish! 💕</h2> 
+			<form> 
+				<p>Want to know what makes  so irresistible?</p> 
+				<p>✨ Waddles with confidence that melts even the coldest ice</p>
+				<p>🐧 Those sparkling eyes that say "I'm the one you've been waiting for"</p>
+				<p>💖 A personality so warm, it could melt Antarctica</p>
+				<p class="cta-text">Ready to fall for this adorable penguin?</p> 
+			</form>
+			
+		
+   		</section> 
+   	</main> 
+   	<style> 
+  :root { 
+    --penguin-size: 200px; 
+    --penguin-skin: black; 
+    --penguin-belly: white; 
+    --penguin-beak: orange; 
+  } 
+
+  @media (max-width: 350px) {
+    :root { --penguin-size: 160px; }
+    header h1 { font-size: 1.1rem; }
+    .penguin { margin-top: 12%; }
+    main { padding: 15px 10px; }
+    main h2 { font-size: 1.2rem; }
+    main p { font-size: 0.9rem; }
+    .learn-more-btn { padding: 8px 14px; font-size: 0.9rem; }
+    .nav-home { padding: 8px 14px; font-size: 0.85rem; }
+  }
+
+  @media (max-width: 420px) {
+    :root { --penguin-size: 180px; }
+    header h1 { font-size: 1.25rem; }
+    .penguin { margin-top: 10%; }
+    main { padding: 20px 15px; }
+    main h2 { font-size: 1.3rem; }
+    main p { font-size: 0.95rem; }
+    .learn-more-btn { padding: 10px 18px; font-size: 0.95rem; }
+    .nav-home { padding: 8px 16px; font-size: 0.9rem; }
+  }
+  .penguin { 
+    position: relative; 
+    margin: auto; 
+    display: block; 
+    margin-top: 5%; 
+    width: var(--penguin-size, 300px); 
+    height: var(--penguin-size, 300px); 
+  } 
+
+  .right-cheek { 
+    top: 15%; 
+    left: 35%; 
+    background: var(--penguin-belly, white); 
+    width: 60%; 
+    height: 70%; 
+    border-radius: 70% 70% 60% 60%; 
+  } 
+
+  .left-cheek { 
+    top: 15%; 
+    left: 5%; 
+    background: var(--penguin-belly, white); 
+    width: 60%; 
+    height: 70%; 
+    border-radius: 70% 70% 60% 60%; 
+  } 
+
+  .belly { 
+    top: 60%; 
+    left: 2.5%; 
+    background: var(--penguin-belly, white); 
+    width: 95%; 
+    height: 100%; 
+    border-radius: 120% 120% 100% 100%; 
+  } 
+
+  .penguin-top { 
+    top: 10%; 
+    left: 25%; 
+    background: var(--penguin-skin, gray); 
+    width: 50%; 
+    height: 45%; 
+    border-radius: 70% 70% 60% 60%; 
+  } 
+
+  .penguin-bottom { 
+    top: 40%; 
+    left: 23.5%; 
+    background: var(--penguin-skin, gray); 
+    width: 53%; 
+    height: 45%; 
+    border-radius: 70% 70% 100% 100%; 
+  } 
+
+  .right-hand { 
+    top: 5%; 
+    left: 25%; 
+    background: var(--penguin-skin, black); 
+    width: 30%; 
+    height: 60%; 
+    border-radius: 30% 30% 120% 30%; 
+    transform: rotate(130deg); 
+    z-index: -1; 
+    animation-duration: 3s; 
+    animation-name: wave; 
+    animation-iteration-count: infinite; 
+    transform-origin:0% 0%; 
+    animation-timing-function: linear; 
+  } 
+
+  @keyframes wave { 
+      10% { 
+        transform: rotate(110deg); 
+      } 
+      20% { 
+        transform: rotate(130deg); 
+      } 
+      30% { 
+        transform: rotate(110deg); 
+      } 
+      40% { 
+        transform: rotate(130deg); 
+      } 
+    } 
+
+  .left-hand { 
+    top: 0%; 
+    left: 75%; 
+    background: var(--penguin-skin, gray); 
+    width: 30%; 
+    height: 60%; 
+    border-radius: 30% 30% 30% 120%; 
+    transform: rotate(-45deg); 
+    z-index: -1; 
+  } 
+
+  .right-feet { 
+    top: 85%; 
+    left: 60%; 
+    background: var(--penguin-beak, orange); 
+    width: 15%; 
+    height: 30%; 
+    border-radius: 50% 50% 50% 50%; 
+    transform: rotate(-80deg); 
+    z-index: -2222; 
+  } 
+
+  .left-feet { 
+    top: 85%; 
+    left: 25%; 
+    background: var(--penguin-beak, orange); 
+    width: 15%; 
+    height: 30%; 
+    border-radius: 50% 50% 50% 50%; 
+    transform: rotate(80deg); 
+    z-index: -2222; 
+  } 
+
+  .right-eye { 
+    top: 45%; 
+    left: 60%; 
+    background: black; 
+    width: 15%; 
+    height: 17%; 
+    border-radius: 50%; 
+  } 
+
+  .left-eye { 
+    top: 45%; 
+    left: 25%; 
+    background: black; 
+    width: 15%; 
+    height: 17%; 
+    border-radius: 50%; 
+  } 
+
+  .sparkle { 
+    top: 25%; 
+    left:-23%; 
+    background: white; 
+    width: 150%; 
+    height: 100%; 
+    border-radius: 50%; 
+  } 
+
+  .blush-right { 
+    top: 65%; 
+    left: 15%; 
+    background: pink; 
+    width: 15%; 
+    height: 10%; 
+    border-radius: 50%; 
+  } 
+
+  .blush-left { 
+    top: 65%; 
+    left: 70%; 
+    background: pink; 
+    width: 15%; 
+    height: 10%; 
+    border-radius: 50%; 
+  } 
+
+  .beak-top { 
+    top: 60%; 
+    left: 40%; 
+    background: var(--penguin-beak, orange); 
+    width: 20%; 
+    height: 10%; 
+    border-radius: 50%; 
+  } 
+
+  .beak-bottom { 
+    top: 65%; 
+    left: 42%; 
+    background: var(--penguin-beak, orange); 
+    width: 16%; 
+    height: 10%; 
+    border-radius: 50%; 
+  } 
+
+  body { 
+    background:#c6faf1; 
+  } 
+
+  .penguin * { 
+    position: absolute; 
+  } 
+
+  /* Navigation back to home */
+  .nav-home {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+  }
+
+  .nav-home:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+.tagline { font-size: 0.95rem; color: #333; margin: 4px 0 10px; text-align: center; }
+
+  /* Main content styling */
+  main {
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  main h2 {
+    color: #d63384;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+  }
+
+  main p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 10px 0;
+    color: #495057;
+  }
+
+  main p:first-of-type {
+    font-weight: 600;
+    color: #6f42c1;
+    font-size: 1.1rem;
+  }
+
+  .learn-more-btn {
+    display: inline-block;
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white;
+    text-decoration: none;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(238, 90, 36, 0.2);
+  }
+
+  .learn-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    color: white;
+  }
+
+  .cta-text {
+    font-weight: 600;
+    color: #6f42c1;
+    margin: 20px 0 5px;
+  }
+</style> 
+
+<!-- Navigation back to home -->
+<a href="index.html" class="nav-home">← Back to Home</a>
+
+<div class="penguin"> 
+  <div class="penguin-bottom"> 
+    <div class="right-hand"></div> 
+    <div class="left-hand"></div> 
+    <div class="right-feet"></div> 
+    <div class="left-feet"></div> 
+  </div> 
+  <div class="penguin-top"> 
+    <div class="right-cheek"></div> 
+    <div class="left-cheek"></div> 
+    <div class="belly"></div> 
+    <div class="right-eye"> 
+      <div class="sparkle"></div> 
+    </div> 
+    <div class="left-eye"> 
+      <div class="sparkle"></div> 
+    </div> 
+    <div class="blush-right"></div> 
+    <div class="blush-left"></div> 
+    <div class="beak-top"></div> 
+    <div class="beak-bottom"></div> 
+  </div> 
+</div> 
+
+   </body> 
+</html>

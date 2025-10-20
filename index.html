@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome!</title>
+    <script>
+        // Check if user has decoded name, if not redirect to secretcode.html
+        window.addEventListener('DOMContentLoaded', () => {
+            const decodedName = localStorage.getItem('decodedName');
+            if (!decodedName) {
+                window.location.href = 'secretcode.html';
+            } else {
+                document.title = `Welcome ${decodedName}!`;
+            }
+        });
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        .welcome-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .greeting {
+            font-size: 4.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* Mini Penguin Preview */
+        .mini-penguin {
+            position: relative;
+            margin: 20px auto;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mini-penguin:hover {
+            transform: scale(1.1);
+        }
+
+        .mini-penguin-body {
+            position: absolute;
+            top: 20%;
+            left: 25%;
+            background: black;
+            width: 50%;
+            height: 60%;
+            border-radius: 50% 50% 40% 40%;
+        }
+
+        .mini-penguin-belly {
+            position: absolute;
+            top: 30%;
+            left: 35%;
+            background: white;
+            width: 30%;
+            height: 40%;
+            border-radius: 50%;
+        }
+
+        .mini-penguin-head {
+            position: absolute;
+            top: 5%;
+            left: 30%;
+            background: black;
+            width: 40%;
+            height: 40%;
+            border-radius: 50%;
+        }
+
+        .mini-penguin-beak {
+            position: absolute;
+            top: 25%;
+            left: 45%;
+            background: orange;
+            width: 10%;
+            height: 8%;
+            border-radius: 50%;
+        }
+
+        .mini-penguin-eye {
+            position: absolute;
+            background: white;
+            width: 8%;
+            height: 8%;
+            border-radius: 50%;
+        }
+
+        .mini-penguin-eye.left {
+            top: 15%;
+            left: 35%;
+        }
+
+        .mini-penguin-eye.right {
+            top: 15%;
+            left: 55%;
+        }
+
+        .mini-penguin-wing {
+            position: absolute;
+            background: black;
+            width: 20%;
+            height: 35%;
+            border-radius: 50%;
+        }
+
+        .mini-penguin-wing.left {
+            top: 25%;
+            left: 15%;
+            transform: rotate(-20deg);
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        .mini-penguin-wing.right {
+            top: 25%;
+            left: 65%;
+            transform: rotate(20deg);
+        }
+
+        .mini-penguin-feet {
+            position: absolute;
+            background: orange;
+            width: 12%;
+            height: 8%;
+            border-radius: 50%;
+            top: 75%;
+        }
+
+        .mini-penguin-feet.left {
+            left: 30%;
+        }
+
+        .mini-penguin-feet.right {
+            left: 58%;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(-20deg); }
+            50% { transform: rotate(-40deg); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navigation-buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .penguin-button {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+        }
+
+        .firecracker-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .heart-button {
+            background: linear-gradient(45deg, #ff9ff3, #ff6b81);
+            box-shadow: 0 4px 15px rgba(255, 159, 243, 0.5);
+        }
+
+        .dog-button {
+            background: linear-gradient(45deg, #25A9FC, #0185B5);
+            box-shadow: 0 4px 15px rgba(37, 169, 252, 0.5);
+        }
+
+        .compliments-button {
+            background: linear-gradient(45deg, #ff9ff3, #a29bfe);
+            box-shadow: 0 4px 15px rgba(162, 155, 254, 0.45);
+        }
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .sparkles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        /* Ensure canvas never blocks clicks */
+        #c { pointer-events: none; }
+
+        .sparkle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 3s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .greeting {
+                font-size: 2.5rem;
+            }
+            
+            .welcome-container {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            .nav-button {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .greeting { font-size: 2rem; }
+            .subtitle { font-size: 1.1rem; }
+            .welcome-container { padding: 18px; margin: 14px; }
+            .mini-penguin { width: 88px; height: 88px; }
+            .nav-button { padding: 10px 18px; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="c" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2"></canvas>
+    <div class="sparkles" id="sparkles"></div>
+    
+    <div class="welcome-container">
+        <h1 class="greeting" id="greeting">Hi! 👋</h1>
+        <p class="subtitle">You light up my sky — ready to explore?</p>
+        <script>
+            // Update greeting with decoded name
+            document.addEventListener('DOMContentLoaded', () => {
+                const decodedName = localStorage.getItem('decodedName');
+                if (decodedName) {
+                    document.getElementById('greeting').textContent = `Hi ${decodedName}! 👋`;
+                }
+            });
+        </script>
+        
+        <div class="mini-penguin" onclick="goToPenguin()">
+            <div class="mini-penguin-body"></div>
+            <div class="mini-penguin-belly"></div>
+            <div class="mini-penguin-head"></div>
+            <div class="mini-penguin-beak"></div>
+            <div class="mini-penguin-eye left"></div>
+            <div class="mini-penguin-eye right"></div>
+            <div class="mini-penguin-wing left"></div>
+            <div class="mini-penguin-wing right"></div>
+            <div class="mini-penguin-feet left"></div>
+            <div class="mini-penguin-feet right"></div>
+        </div>
+        
+        <div class="navigation-buttons">
+            <a href="penguin.html" class="nav-button penguin-button">
+                🐧 Meet the Penguin
+            </a>
+            <a href="firecracker.html" class="nav-button firecracker-button">
+                🎆 Diwali Firecracker Show
+            </a>
+            <a href="for-you.html" class="nav-button heart-button">
+                ❤️ For You Page
+            </a>
+            <a href="dog.html" class="nav-button dog-button">
+                🐕 Meet Your Fav Animal
+            </a>
+            <a href="compliments.html" class="nav-button compliments-button">
+                💖 My Fav Page
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Create floating sparkles
+        function createSparkles() {
+            const sparklesContainer = document.getElementById('sparkles');
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = Math.random() * 100 + '%';
+                    sparkle.style.width = (Math.random() * 4 + 2) + 'px';
+                    sparkle.style.height = sparkle.style.width;
+                    sparkle.style.animationDelay = Math.random() * 3 + 's';
+                    
+                    sparklesContainer.appendChild(sparkle);
+                    
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, 3000);
+                }, i * 200);
+            }
+        }
+
+        // Function to navigate to penguin page
+        function goToPenguin() {
+            window.location.href = 'penguin.html';
+        }
+
+        // Start sparkles animation
+        createSparkles();
+        setInterval(createSparkles, 6000);
+
+        // Add some interactive effects
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() < 0.1) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = e.clientX + 'px';
+                sparkle.style.top = e.clientY + 'px';
+                sparkle.style.width = '3px';
+                sparkle.style.height = '3px';
+                sparkle.style.position = 'fixed';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.zIndex = '1000';
+                
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            }
+        });
+    </script>
+<script>
+// Heart-balloon canvas animation (flirty phrases, "for you")
+var c = document.getElementById('c'),
+    ctx = c.getContext('2d');
+
+var w, h;
+function resize(){
+  w = c.width = window.innerWidth;
+  h = c.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+var opts = {
+  phrases: [
+    "For you \u2764\ufe0f",
+    "Hi ,\nthis is all for you",
+    "You're beautiful,\nevery single day",
+    "You're clever\nin every way",
+    "A world without you?\nNo way",
+    "You light up\nmy sky",
+    "You're the best\nI know",
+    "Keep shining,\nfor me",
+    "You are\nincredible",
+    "Nothing better\nthan you",
+    "Just you,\nforever",
+    "For you,\nwith love \u2764\ufe0f",
+    "You & me\nperfectly us",
+    "Every occasion,\nI choose you",
+    "You're just\namazing"
+  ],
+  balloons: 22,
+  baseVelY: -0.8,
+  addedVelY: -1.2,
+  baseVelX: -0.15,
+  addedVelX: 0.6,
+  baseSize: 24,
+  addedSize: 12,
+  baseSizeAdder: 2,
+  addedSizeAdder: 2,
+  baseIncrementer: .01,
+  addedIncrementer: .03,
+  baseHue: 340,
+  addedHue: 40,
+  font: '16px \"Segoe UI\", Arial'
+};
+
+var cycle = 0,
+    balloonsArr = [];
+
+ctx.font = opts.font;
+
+function Balloon(){ this.reset(); }
+Balloon.prototype.reset = function(){
+  this.size = opts.baseSize + opts.addedSize * Math.random();
+  this.sizeAdder = opts.baseSizeAdder + opts.addedSizeAdder * Math.random();
+  this.incrementer = opts.baseIncrementer + opts.addedIncrementer * Math.random();
+  this.tick = 0;
+  this.x = Math.random() * w;
+  this.y = h + this.size;
+  this.vx = opts.baseVelX + opts.addedVelX * Math.random();
+  this.vy = opts.baseVelY + opts.addedVelY * Math.random();
+  this.color = 'hsla(' + (opts.baseHue + opts.addedHue * Math.random()) + ',70%,60%,0.9)';
+  this.phrase = opts.phrases[++cycle % opts.phrases.length].split('\n');
+  this.lengths = [];
+  for(var i=0;i<this.phrase.length;++i)
+    this.lengths.push(-ctx.measureText(this.phrase[i]).width / 2);
+};
+Balloon.prototype.step = function(){
+  this.tick += this.incrementer;
+  this.x += this.vx;
+  this.y += this.vy;
+
+  var size = this.size + this.sizeAdder * Math.sin(this.tick);
+
+  // string
+  ctx.lineWidth = size / 40;
+  ctx.strokeStyle = '#eee';
+  ctx.beginPath();
+  ctx.moveTo(this.x, this.y - 2);
+  ctx.lineTo(this.x, this.y + size);
+  ctx.stroke();
+
+  // heart balloon
+  ctx.fillStyle = this.color;
+  ctx.save();
+  ctx.translate(this.x, this.y);
+  ctx.rotate(Math.PI / 4);
+  ctx.beginPath();
+  ctx.moveTo(0, 0);
+  ctx.arc(-size/2, -size/2 + size/4, size/4, Math.PI/2, Math.PI*3/2);
+  ctx.arc(-size/2 + size/4, -size/2, size/4, Math.PI, Math.PI*2);
+  ctx.lineTo(0, 0);
+  ctx.fill();
+  ctx.restore();
+
+  // phrase text under balloon
+  ctx.save();
+  ctx.translate(this.x, this.y + size + 18);
+  ctx.scale(size / this.size, size / this.size);
+  ctx.fillStyle = '#eee';
+  for(var i=0;i<this.phrase.length;++i)
+    ctx.fillText(this.phrase[i], this.lengths[i], i * 17);
+  ctx.restore();
+
+  if(this.y < -size * 3) this.reset();
+};
+
+function anim(){
+  window.requestAnimationFrame(anim);
+  ctx.fillStyle = 'rgba(20,20,30,0.6)';
+  ctx.fillRect(0, 0, w, h);
+  if(balloonsArr.length < opts.balloons && Math.random() < 0.08)
+    balloonsArr.push(new Balloon());
+  for(var i=0;i<balloonsArr.length;++i)
+    balloonsArr[i].step();
+}
+anim();
+</script>
+</body>
+</html>
